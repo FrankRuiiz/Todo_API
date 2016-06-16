@@ -23,16 +23,10 @@ app.get('/todos/:id', function(req, res) {
 	//res.send('Asking for todo with id of ' + req.params.id);
 	var todoID = parseInt(req.params.id, 10);
 	var matchedTodo = _.findWhere(todos, {id: todoID});
-
-	// for(var i=0; i<todos.length; i+=1) {
-	// 	if(todos[i].id === todoID) {
-	// 		matchedTodo = todos[i];
-	// 	}
-	// }
 	if(matchedTodo) {
 		res.json(matchedTodo); 
 	} else {
-		res.status(404).send('Id not found.');
+		res.status(404).send('ID not found.');
 	}
 });
 
@@ -52,6 +46,22 @@ app.post('/todos', function(req, res) {
 	todoNextId+=1; 
 
 	res.json(newTodo + ' Added'); 
+});
+
+// DELETE /todos/:id
+app.delete('/todos/:id', function(req, res) {
+	var todoID = parseInt(req.params.id, 10);
+	var matchedTodo = _.findWhere(todos, {id: todoID});
+
+	if(matchedTodo) {
+		todos = _.without(todos, matchedTodo);
+		res.json(matchedTodo);
+    	return matchedTodo;
+	} else {
+		res.status(404).json({'error': 'ID not found.'});
+	}
+
+  
 });
 
 app.listen(PORT, function() {
