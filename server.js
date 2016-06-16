@@ -22,18 +22,18 @@ app.get('/todos', function(req, res) {
 app.get('/todos/:id', function(req, res) {
 	//res.send('Asking for todo with id of ' + req.params.id);
 	var todoID = parseInt(req.params.id, 10);
-	var matchedTodo = _findWhere(todos, {id: todoID});
+	var matchedTodo = _.findWhere(todos, {id: todoID});
 
 	// for(var i=0; i<todos.length; i+=1) {
 	// 	if(todos[i].id === todoID) {
 	// 		matchedTodo = todos[i];
 	// 	}
 	// }
-	// if(matchedTodo) {
-	// 	res.json(matchedTodo); 
-	// } else {
-	// 	res.status(404).send('Id not found.');
-	// }
+	if(matchedTodo) {
+		res.json(matchedTodo); 
+	} else {
+		res.status(404).send('Id not found.');
+	}
 });
 
 // POST /todos/
