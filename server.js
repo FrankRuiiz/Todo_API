@@ -15,7 +15,17 @@ app.get('/', function(req, res) {
 
 // GET request to get all todos, well use /todos
 app.get('/todos', function(req, res) {
-	res.json(todos);  // the json method allows us to send the data without having to use json.stringify like you normally would 
+	var queryParams = req.query;
+	var filteredTodos = todos;
+
+	// console.log('queryParams', queryParams);
+	if(queryParams.hasOwnProperty('completed') && queryParams.completed === 'true') {
+		filteredTodos = _.where(filteredTodos, {'completed': true});
+	} else if(queryParams.hasOwnProperty('completed') && queryParams.completed === 'false') {
+		filteredTodos = _.where(filteredTodos, {'completed': false});
+	}
+
+	res.json(filteredTodos);  // the json method allows us to send the data without having to use json.stringify like you normally would 
 });
 
 // GET request to get a singel todo, todos/:id
